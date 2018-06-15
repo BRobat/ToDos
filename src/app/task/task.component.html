@@ -1,3 +1,11 @@
-<p>
-  task works!
-</p>
+<ul *ngIf="tasks.length">
+  <li *ngFor="let task of tasks">
+
+    <button>ok</button>
+    <label>{{task.name}}</label>
+    <input>
+    <button>thrash</button>
+
+    <app-task *ngIf="task[key]" [key]="key" [data]="task[key]"></app-task>
+  </li>
+</ul>
