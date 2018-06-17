@@ -14,7 +14,7 @@ import { Observable } from 'rxjs';
 })
 export class AppComponent implements AfterViewInit {
 
-  message:string = "";
+  childTask: any[];
   key: string = "subtasks";
   tasks$: AngularFireList<Task>;
   tasks: Observable<any[]>;
@@ -30,8 +30,31 @@ export class AppComponent implements AfterViewInit {
      
       this.tasks$.push(newTask);
       console.log(newTask)
-      
      }
+
+     addSubtask(task) {
+      console.log(task)
+      let newSubtask = new Task;
+      newSubtask.name = '';
+      newSubtask.deleted = false;
+      newSubtask.done = false;
+      newSubtask.showSubtasks = true;
+
+      if (task.subtasks == null) {
+        this.tasks$.update(task.key, {name: task.name,
+          done: task.done,
+          deleted: task.deleted,
+          showSubtasks: task.showSubtasks,
+          subtasks: [newSubtask]}) 
+      } else {
+        this.tasks$.update(task.key, {name: task.name,
+          done: task.done,
+          deleted: task.deleted,
+          showSubtasks: task.showSubtasks,
+          subtasks: [newSubtask, task.subtasks]})
+      }
+      
+    }
 
   constructor(private tasksDb: AngularFireDatabase) {
     this.tasks$ = tasksDb.list('/Tasks')
@@ -42,19 +65,28 @@ export class AppComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    // this.message = this.child.messegeEvent;
+    this.childTask = this.child.messegeEvent;
+    console.log(this.childTask)
   }
 
   recieveMessage($event) {
-    this.message = $event
+    $event
+    console.log($event)
+    this.tasks$.update($event.key, {name: $event,
+    done: $event.done,
+    deleted: $event.deleted,
+    showSubtasks: $event.showSubtasks,
+    subtasks: $event.subtasks})
   }
 
-  update(value, task){
+  updateName(value, task){
     console.log(task)
-    this.tasks$.update(task.key, {name: value}) // don't kno why there is an error. But it works :D 
+    this.tasks$.update(task.key, {name: value,
+    done: task.done,
+    deleted: task.deleted,
+    showSubtasks: task.showSubtasks,
+    subtasks: task.subtasks
+  }) 
 
   }
-
-
-
 }

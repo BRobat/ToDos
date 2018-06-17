@@ -3,5 +3,5 @@ export class Task {
     done: boolean;
     deleted: boolean;
     showSubtasks: boolean;
-    subtasks: [Task];
+    subtasks: Task[];
 }

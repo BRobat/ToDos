@@ -12,7 +12,7 @@ export class TaskComponent implements OnInit {
 
 
   @Input('data') tasks$: any[];
-  @Input('key') key = "subtasks";
+  @Input('key') key: any[];
 
   @Output() messageEvent = new EventEmitter<string>()
 
@@ -25,6 +25,14 @@ export class TaskComponent implements OnInit {
 
   update(value, task) {
     console.log(task)
-    this.messageEvent.emit(task.key)
+    this.messageEvent.emit(value)
   }
+
+  newSubtask(value, task) {
+    console.log(task)
+
+  }
+
+
+
 }
