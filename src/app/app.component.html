@@ -1,5 +1,21 @@
-<p>
-  dwadwa
-</p>
 
-  <app-task-list></app-task-list>
+<input type="text" #box (keyup.enter)="addTask(box.value)">
+
+
+
+<ng-template #loading>
+  Loading stuff or something went wrong :[
+</ng-template>
+<ul *ngIf="tasks$; else loading">
+  <li *ngFor="let task of tasks | async">
+    <div>
+      <button class="btn  input-group-prepend">...</button>
+      <button class="btn">ok</button>
+      <label class="lightweight-table">{{task?.name}}</label>
+      <input class="input" #box (keyup.enter)="update(box.value)">
+      <button class="btn">thrash</button>
+    </div>
+
+    <app-task [key]="key" [data]="task[key]" (messageEvent)="recieveMessage($event)"></app-task>
+  </li>
+</ul>

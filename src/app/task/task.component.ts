@@ -1,4 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Task } from './../task';
+import { AngularFireList } from "angularfire2/database";
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+
 
 @Component({
   selector: 'app-task',
@@ -7,14 +10,20 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class TaskComponent implements OnInit {
 
-  @Input('data') tasks: Array<Object>;
-  @Input('key') key: string;
 
+  @Input('data') tasks$: any[];
+  @Input('key') key: any[];
 
-  constructor() { }
+  @Output() messageEvent = new EventEmitter<string>()
+
+  constructor() { 
+    console.log(this.key)
+  }
 
   ngOnInit() {
   }
 
-
+  update(task) {
+    this.messageEvent.emit(task[this.key].name)
+  }
 }

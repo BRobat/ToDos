@@ -1,11 +1,26 @@
-<ul *ngIf="tasks.length">
-  <li *ngFor="let task of tasks">
+<ng-template #loading>
+  kindof
+</ng-template>
 
-    <button>ok</button>
-    <label>{{task.name}}</label>
-    <input>
-    <button>thrash</button>
+<ng-template #nosubtasks>
+  no subtasks
+</ng-template>
 
-    <app-task *ngIf="task[key]" [key]="key" [data]="task[key]"></app-task>
+<ul *ngIf="tasks$; else loading">
+  <p> yea </p>
+
+  <li *ngFor="let task of tasks$">
+    <div>
+      <button class="btn  input-group-prepend">...</button>
+      <button class="btn">ok</button>
+      <label class="lightweight-table">{{task?.name}}</label>
+      <input class="input" #box (keyup.enter)="update(box.task)">
+      <button class="btn">thrash</button>
+    </div>
+
+    <div *ngIf="task?.subtasks; else nosubtasks">
+      subtask
+      <app-task [key]="key" [data]="task[key]"></app-task>
+    </div>
   </li>
 </ul>
