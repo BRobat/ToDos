@@ -9,10 +9,12 @@
 <ul *ngIf="tasks$; else loading">
   <li *ngFor="let task of tasks | async">
     <div>
+
+      <!-- because for some reasons first tasks doesn't show as task components  -->
       <button class="btn  input-group-prepend">...</button>
       <button class="btn">ok</button>
       <label class="lightweight-table">{{task?.name}}</label>
-      <input class="input" #box (keyup.enter)="update(box.value)">
+      <input class="input" #box (keyup.enter)="update(box.value, task)">
       <button class="btn">thrash</button>
     </div>
 

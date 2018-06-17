@@ -12,7 +12,7 @@ import { Observable } from 'rxjs';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements AfterViewInit {
 
   message:string = "";
   key: string = "subtasks";
@@ -49,8 +49,9 @@ export class AppComponent {
     this.message = $event
   }
 
-  update(value){
-   
+  update(value, task){
+    console.log(task)
+    this.tasks$.update(task.key, {name: value}) // don't kno why there is an error. But it works :D 
 
   }
 

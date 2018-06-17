@@ -12,7 +12,7 @@ export class TaskComponent implements OnInit {
 
 
   @Input('data') tasks$: any[];
-  @Input('key') key: any[];
+  @Input('key') key = "subtasks";
 
   @Output() messageEvent = new EventEmitter<string>()
 
@@ -23,7 +23,8 @@ export class TaskComponent implements OnInit {
   ngOnInit() {
   }
 
-  update(task) {
-    this.messageEvent.emit(task[this.key].name)
+  update(value, task) {
+    console.log(task)
+    this.messageEvent.emit(task.key)
   }
 }
