@@ -1,35 +1,7 @@
-<ng-template #loading>
-  kindof
-</ng-template>
-
-
-
-<ul *ngIf="tasks$; else loading">
-  <p> yea </p>
-
-  <li *ngFor="let task of tasks$">
-    <div>
-      <button class="btn">...</button>
-      <button class="btn">ok</button>
-      <label class="lightweight-table">{{task?.name}}</label>
-      <input class="input" #box (keyup.enter)="update(box.value, task)">
-      <button class="btn">thrash</button>
-    </div>
-
-    <ng-template #nosubtasks>
-
-    </ng-template>
-
-    <div *ngIf="task?.subtasks; else nosubtasks">
-      <div *ngIf="task.showSubtasks">
-        subtasks on subtask
-        <app-task [key]="key" [data]="task[key]"></app-task>
-      </div>
-      
-    </div>
-  </li>
-</ul>
-
-<input class="newSubtaskInput" #box (keyup.enter)="newSubtask(box.value, tasks$)" placeholder="new subtask">
-
-
+<div class="task">
+  <button class="btn" (click)="print(task)">...</button>
+  <button class="btn" (click)="print(task)"> + </button>
+  <button class="btn" (click)="print(task)">ok</button>
+  <input class="input" placeholder="{{task.name}}" #box (keyup.enter)="update(box.value, task)">
+  <button class="btn">X</button>
+</div>

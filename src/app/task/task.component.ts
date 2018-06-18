@@ -1,6 +1,7 @@
 import { Task } from './../task';
-import { AngularFireList } from "angularfire2/database";
+import { Observable } from 'rxjs';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+
 
 
 @Component({
@@ -11,13 +12,13 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 export class TaskComponent implements OnInit {
 
 
-  @Input('data') tasks$: any[];
+  @Input('data') task: Task;
   @Input('key') key: any[];
 
   @Output() messageEvent = new EventEmitter<string>()
 
   constructor() { 
-    console.log(this.key)
+    console.log(this.task)
   }
 
   ngOnInit() {
@@ -31,6 +32,10 @@ export class TaskComponent implements OnInit {
   newSubtask(value, task) {
     console.log(task)
 
+  }
+
+  print(str) {
+    console.log(str)
   }
 
 

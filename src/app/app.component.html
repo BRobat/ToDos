@@ -1,25 +1,21 @@
-
-
-
 <input type="text" #box (keyup.enter)="addTask(box.value)" placeholder="new task">
 
-<ng-template #loading>
-  Loading stuff or something went wrong :[
-</ng-template>
-<ul *ngIf="tasks$; else loading">
-  <li *ngFor="let task of tasks | async">
-    <div>
 
-      <!-- because for some reasons first tasks doesn't show as task components  -->
-      <button class="btn" (click)="!task.showSubtasks">...</button>
-      <button class="btn">ok</button>
-      <button class="btn" (click)="addSubtask(task)">+</button>
-      <label class="lightweight-table">{{task?.name}}</label>
-      <input class="input" #box (keyup.enter)="updateName(box.value, task)">
-      <button class="btn">thrash</button>
+
+
+<button class="btn" (click)="print(tasks$)">...</button>
+
+
+<div *ngFor="let task of tasks$ | async">
+  
+  <div *ngIf="task.subtasks; else noSubtasks">
+    <app-task [key]="key" [data]="task"(messageEvent)="recieveMessage($event)"></app-task>
+    <div *ngFor="let sub of task.subtasks">
+      <app-task [key]="key" [data]="task" (messageEvent)="recieveMessage($event)"></app-task>
     </div>
 
-    <app-task [key]="key" [data]="task[key]" (messageEvent)="recieveMessage($event)"></app-task>
-  </li>
-</ul>
-
+  </div>
+  <ng-template #noSubtasks>
+    <app-task [key]="key" [data]="task" (messageEvent)="recieveMessage($event)"></app-task>
+  </ng-template>
+</div>

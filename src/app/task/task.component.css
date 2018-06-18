@@ -1,0 +1,14 @@
+.task {
+    background-color: grey;
+    margin: 5px 5px 5px 5px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.btn {
+    text-align: center;
+    padding: 0;
+    margin: 5px;
+    width: 30px;
+
+}
