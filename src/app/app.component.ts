@@ -21,9 +21,9 @@ export class AppComponent{
 
   @ViewChild(TaskComponent) child;
 
-  addTask(value) {
+  addTask() {
       let newTask = new Task;
-      newTask.name = value;
+      newTask.name = '';
       newTask.deleted = false;
       newTask.done = false;
       newTask.showSubtasks = true;
@@ -82,5 +82,21 @@ export class AppComponent{
       map(changes => 
         changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
       ));
+    }
+
+    isString(str) {
+      return typeof str === 'string';
+    }
+
+    isLong(str) {
+      return str.length > 5;
+    }
+
+    isEqual(str1, str2) {
+      return str1 == str2
+    }
+
+    print(str) {
+      console.log(str);
     }
   }

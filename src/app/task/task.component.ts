@@ -23,7 +23,6 @@ export class TaskComponent{
   @Output() addEvent = new EventEmitter<Task>();
 
   constructor() { 
-    console.log(this.task)
   }
 
 
