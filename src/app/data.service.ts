@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { map } from 'rxjs/operators';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Task } from './task';
 
 @Injectable({
@@ -13,19 +12,15 @@ export class DataService {
   tasksRef: AngularFireList<any>;
   tasks$: Observable<any[]>;
 
-  private taskSource = new BehaviorSubject<Task>("");
-  currentTaskSource = this.taskSource.asObservable();
-
-
-
   constructor(db: AngularFireDatabase) { 
     this.tasksRef = db.list('/Tasks');
     this.tasks$ = this.tasksRef.snapshotChanges().pipe(
     map(changes => 
-      changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
+      changes.map(c => ({ key: c.payload.key, ...c.payload.val() })),
     ));
   }
 
+  // Changing name of a task
   nameTask(value, task) {
     console.log("hej",task)
     this.tasksRef.update(task.key, {name: value,
@@ -35,6 +30,7 @@ export class DataService {
       parent: task.parent})
   }
 
+  // toggles subtask view
   showSubtasks($task) {
     console.log($task)
     this.tasksRef.update($task.key, {name: $task.name,
@@ -44,15 +40,17 @@ export class DataService {
       parent: $task.parent})
   }
 
+  // completes/uncompletes the task
   completeTask($task) {
     console.log($task)
     this.tasksRef.update($task.key, {name: $task.name,
-      done: true,
+      done: !$task.done,
       deleted: $task.deleted,
       showSubtasks: $task.showSubtasks,
       parent: $task.parent})
   }
 
+  // deletes task
   deleteTask($task) {
     console.log($task)
     this.tasksRef.update($task.key, {name: $task.name,
@@ -62,10 +60,11 @@ export class DataService {
       parent: $task.parent})
   }
 
+  // adds subtask
   addSubtask($task){
     console.log($task)
     let newTask = new Task;
-    newTask.name = "new task";
+    newTask.name = "-";
     newTask.deleted = false;
     newTask.done = false;
     newTask.showSubtasks = true;
@@ -73,6 +72,4 @@ export class DataService {
     
     this.tasksRef.push(newTask);
   }
-  
-
 }

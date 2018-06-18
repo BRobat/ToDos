@@ -1,12 +1,8 @@
-<button class="btn" (click)="addTask()"> + </button>
-
-<!-- PYTAMID OF DOM  -->
-
+<button class="btn" (click)="addTask()"> Start new project </button>
 
 <ng-container *ngIf="(tasks$ | async) as tasks">
-  
   <ng-container *ngFor="let task of tasks">
-      <ng-container *ngIf="!isLong(task.parent)">
+      <ng-container *ngIf="!isLong(task.parent)">  
       <app-task [task]="task" [key]="task.key" [data]="tasks"></app-task>
     </ng-container>
   </ng-container>

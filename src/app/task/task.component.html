@@ -1,16 +1,25 @@
 <ng-container *ngIf="!task.deleted">
-  <div class="row">
-
+  <div class="project">
     <ul>
       <li>
         <div class="task">
+
+          <input class="input" *ngIf="task" placeholder="change name" #box (keyup.enter)="updateName(box.value, task)">
           <button class="btn" (click)="showSubtasks(task)">...</button>
           <button class="btn" (click)="addSubtask(task)"> + </button>
           <button class="btn" (click)="completeTask(task)">ok</button>
-
-          <input class="input" *ngIf="task" placeholder="{{task.name}}" #box (keyup.enter)="update(box.value, task)">
           <button class="btn" (click)="deleteTask(task)">X</button>
+          <div class="text-field">
+            <ng-container *ngIf="task.done; else unfinished">
+              <del>
+                {{task.name}}
+              </del>
+            </ng-container>
 
+            <ng-template #unfinished>
+              {{task.name}}
+            </ng-template>
+          </div>
           <ng-container *ngIf="task.showSubtasks">
             <ng-container *ngFor="let t of tasks">
               <ng-container *ngIf="isEqual(t.parent, task.key)">
@@ -18,7 +27,6 @@
               </ng-container>
             </ng-container>
           </ng-container>
-
         </div>
       </li>
     </ul>

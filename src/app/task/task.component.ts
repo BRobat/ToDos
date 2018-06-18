@@ -1,9 +1,6 @@
 import { Task } from './../task';
-import { Observable } from 'rxjs';
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { DataService } from '../data.service';
-
-
 
 @Component({
   selector: 'app-task',
@@ -21,12 +18,7 @@ export class TaskComponent{
   constructor(private data: DataService) { 
   }
 
-  ngOnInit(): void {
-    
-  }
-
-
-  update(value, task) {
+  updateName(value, task) {
     console.log(task)
     this.data.nameTask(value, task);
   }
@@ -48,11 +40,9 @@ export class TaskComponent{
   }
 
 
-
  isEqual(str1, str2) {
   return str1 == str2
 }
-
 
  print(str) {
    console.log(str);
