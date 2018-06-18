@@ -1,18 +1,22 @@
 <div class="row">
-  <div class="level">
-      {{task.level}}
-  </div>
-    <div class="task">
+    
+  <ul>
+    <li *ngFor="let task of tasks">
+        <button class="btn" (click)="print(task[key])">ok</button>
       
-      <button class="btn" (click)="showSubtasks(task)">...</button>
-      <button class="btn" (click)="addSubtask(task)"> + </button>
-      <button class="btn" (click)="completeTask(task)">ok</button>
-      <del>
-        <input class="input" *ngIf="task.done" placeholder="{{task.name}}" #box (keyup.enter)="update(box.value, task)">
-      </del>
-      <input class="input" *ngIf="!task.done" placeholder="{{task.name}}" #box (keyup.enter)="update(box.value, task)">
-      <button class="btn" (click)="deleteTask(task)">X</button>
+        <div class="task">
 
+          <button class="btn" (click)="showSubtasks(task)">...</button>
+          <button class="btn" (click)="addSubtask(task)"> + </button>
+          <button class="btn" (click)="completeTask(task)">ok</button>
 
-    </div>
-  </div>
+          <input class="input" *ngIf="!task.done" placeholder="{{task.name}}" #box (keyup.enter)="update(box.value, task)">
+          <button class="btn" (click)="deleteTask(task)">X</button>
+
+          
+
+          <app-task  *ngIf="tasks[key]" [key]="key" [data]="task[key]" (taskName)="update($event, task)" (showEvent)="showSubtasks(task)" (doneEvent)="completeTask(task)"
+            (deleteEvent)="deleteTask(task)" (addEvent)="addSubtask(task)"></app-task>
+        </div>
+    </li>
+  </ul>

@@ -4,50 +4,7 @@
 
 
 <ng-container *ngIf="(tasks$ | async) as tasks">
-  <ng-container *ngFor="let task of tasks">
-    
-
-  </ng-container>
-</ng-container>
-
-
-
-
-
-
-
-
-
-
-<ng-container *ngIf="(tasks$ | async) as tasks">
-  <ng-container *ngFor="let task of tasks">
-    <ng-container *ngIf="!isLong(task.parent)">
-      <app-task [key]="key" [data]="task" (taskName)="updateTaskName($event, task)" (showEvent)="showSubtasks(task)" (doneEvent)="completeTask(task)"
-        (deleteEvent)="deleteTask(task)" (addEvent)="addSubtask(task)"></app-task>
-
-
-
-
-      <ng-container *ngFor="let u of tasks">
-        <ng-container *ngFor="let t of tasks">
-          <ng-container *ngIf="isEqual(t.parent, u.key)">
-            <ng-container *ngIf="isEqual(t.parent, task.key)">
-              <ng-container *ngIf="!t.deleted">
-                <ng-container *ngIf="!t.deleted">
-
-                  <!-- <button class="btn" (click)="print(u.key)"> + </button>
-            <button class="btn" (click)="print(t.key)"> + </button>
-            <button class="btn" (click)="print(t)"> info </button> -->
-                  <app-task [key]="t.key" [data]="t" (taskName)="updateTaskName($event, t)" (showEvent)="showSubtasks(t)" (doneEvent)="completeTask(t)"
-                    (deleteEvent)="deleteTask(t)" (addEvent)="addSubtask(t)"></app-task>
-
-                </ng-container>
-              </ng-container>
-            </ng-container>
-          </ng-container>
-        </ng-container>
-      </ng-container>
-
-    </ng-container>
-  </ng-container>
+  <button class="btn" (click)="print(tasks)">ok</button>
+  <app-task [key]="key" [data]="tasks" (taskName)="updateTaskName($event, tasks)" (showEvent)="showSubtasks(tasks)" (doneEvent)="completeTask(tasks)"
+    (deleteEvent)="deleteTask(tasks)" (addEvent)="addSubtask(tasks)"></app-task>
 </ng-container>

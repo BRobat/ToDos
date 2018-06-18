@@ -6,10 +6,12 @@
 }
 
 .btn {
+    background-color: whitesmoke;
     text-align: center;
     padding: 0;
     margin: 5px;
     width: 30px;
+
 
 }
 

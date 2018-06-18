@@ -12,7 +12,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 export class TaskComponent{
 
 
-  @Input('data') task: Task;
+  @Input('data') tasks: [Task];
   @Input('key') key: any[];
 
   @Output() taskName = new EventEmitter<string>();
@@ -20,16 +20,19 @@ export class TaskComponent{
   @Output() showEvent = new EventEmitter<boolean>();
   @Output() doneEvent = new EventEmitter<boolean>();
   @Output() deleteEvent = new EventEmitter<boolean>();
-  @Output() addEvent = new EventEmitter<Task>();
-
-
+  @Output() addEvent = new EventEmitter<string>();
 
   constructor() { 
   }
 
+  ngOnInit(): void {
+    
+    
+  }
+
 
   update(value, task) {
-    console.log("2")
+    console.log(value)
     this.taskName.emit(value);
     this.taskEvent.emit(task);
   }
@@ -48,6 +51,10 @@ export class TaskComponent{
 
  deleteTask(task) {
   this.deleteEvent.emit(task);
+ }
+
+ print(str) {
+   console.log(str);
  }
 
 

@@ -29,12 +29,14 @@ export class AppComponent{
       newTask.showSubtasks = true;
       newTask.parent = ""
       newTask.level = "- "
+      newTask.subtasks = ["x"]
      
       this.tasksRef.push(newTask);
       console.log(newTask)
      }
 
     updateTaskName($event, task) {
+      console.log(task)
       
         this.tasksRef.update(task.key, {name: $event,
           done: task.done,
@@ -44,6 +46,7 @@ export class AppComponent{
     }
 
     showSubtasks($task) {
+      console.log($task)
       this.tasksRef.update($task.key, {name: $task.name,
         done: $task.done,
         deleted: $task.deleted,
@@ -52,6 +55,7 @@ export class AppComponent{
     }
 
     completeTask($task) {
+      console.log($task)
       this.tasksRef.update($task.key, {name: $task.name,
         done: true,
         deleted: $task.deleted,
@@ -60,6 +64,7 @@ export class AppComponent{
     }
 
     deleteTask($task) {
+      console.log($task)
       this.tasksRef.update($task.key, {name: $task.name,
         done: $task.done,
         deleted: true,
@@ -68,6 +73,7 @@ export class AppComponent{
     }
 
     addSubtask($task){
+      console.log($task)
       let newTask = new Task;
       newTask.name = "new task";
       newTask.deleted = false;
@@ -75,8 +81,15 @@ export class AppComponent{
       newTask.showSubtasks = true;
       newTask.parent = $task.key;
       newTask.level = $task.level + "- "
-
       this.tasksRef.push(newTask);
+
+console.log(newTask[this.key])
+      this.tasksRef.update($task.key, {name: $task.name,
+        done: true,
+        deleted: $task.deleted,
+        showSubtasks: $task.showSubtasks,
+        parent: $task.parent,
+      subtasks: +newTask[this.key]})
     }
 
     constructor(db: AngularFireDatabase) {
