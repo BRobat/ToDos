@@ -1,13 +1,6 @@
 <input type="text" #box (keyup.enter)="addTask(box.value)" placeholder="new task">
 
 
-
-
-<button class="btn" (click)="print(tasks$)">...</button>
-
-
-<div *ngFor="let task of (tasks$ | async) as task">
-  <div>
-    <app-task [key]="key" [data]="task"(taskName)="updateTaskName($event, task)" (showEvent)="showSubtasks(task)"></app-task>
-  </div>
+<div *ngFor="let task of tasks$ | async">
+    <app-task [key]="key" [data]="task" (taskName)="updateTaskName($event, task)" (showEvent)="showSubtasks(task)" (doneEvent)="completeTask(task)" (deleteEvent)="deleteTask(task)" (addEvent)="addSubtask(task)"></app-task>
 </div>

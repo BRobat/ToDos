@@ -14,16 +14,10 @@ import { Observable, Subscription } from 'rxjs';
 })
 export class AppComponent{
 
-  
-
-  childTask: any[];
   key: string = "subtasks";
 
   tasksRef: AngularFireList<any>;
   tasks$: Observable<any[]>;
-
-
-  
 
   @ViewChild(TaskComponent) child;
 
@@ -33,26 +27,53 @@ export class AppComponent{
       newTask.deleted = false;
       newTask.done = false;
       newTask.showSubtasks = true;
+      newTask.parent = ""
      
       this.tasksRef.push(newTask);
       console.log(newTask)
      }
 
     updateTaskName($event, task) {
-      console.log($event)
-      this.tasksRef.update(task.key, {name: $event,
-      done: task.done,
-      deleted: task.deleted,
-      showSubtasks: task.showSubtasks,
-      subtasks: task.subtasks})
+      
+        this.tasksRef.update(task.key, {name: $event,
+          done: task.done,
+          deleted: task.deleted,
+          showSubtasks: task.showSubtasks,
+          parent: task.parent})
     }
 
-    showSubtasks(task) {
-      this.tasksRef.update(task.key, {name: task.name,
-        done: task.done,
-        deleted: task.deleted,
-        showSubtasks: !task.showSubtasks,
-        subtasks: task.subtasks})
+    showSubtasks($task) {
+      this.tasksRef.update($task.key, {name: $task.name,
+        done: $task.done,
+        deleted: $task.deleted,
+        showSubtasks: !$task.showSubtasks,
+        parent: $task.parent})
+    }
+
+    completeTask($task) {
+      this.tasksRef.update($task.key, {name: $task.name,
+        done: true,
+        deleted: $task.deleted,
+        showSubtasks: $task.showSubtasks,
+        parent: $task.parent})
+    }
+
+    deleteTask($task) {
+      this.tasksRef.update($task.key, {name: $task.name,
+        done: $task.done,
+        deleted: true,
+        showSubtasks: false,
+        parent: $task.parent})
+    }
+
+    addSubtask($task){
+      let newTask = new Task;
+      newTask.name = "";
+      newTask.deleted = false;
+      newTask.done = false;
+      newTask.showSubtasks = true;
+      newTask.parent = $task.key;
+      this.tasksRef.push(newTask);
     }
 
     constructor(db: AngularFireDatabase) {
@@ -60,13 +81,6 @@ export class AppComponent{
       this.tasks$ = this.tasksRef.snapshotChanges().pipe(
       map(changes => 
         changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
-      )
-    );
-    }
-
-
-
-    print(str) {
-      console.log(str)
+      ));
     }
   }

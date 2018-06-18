@@ -34,19 +34,19 @@ export class TaskComponent{
   }
 
  showSubtasks(task) {
-  this.showEvent.emit(task)
+  this.showEvent.emit(task);
  }
 
- addSubtask() {
-
+ addSubtask(task) {
+  this.addEvent.emit(task);
  }
 
- finish() {
-
+ completeTask(task) {
+  this.doneEvent.emit(task);
  }
 
- delete() {
-
+ deleteTask(task) {
+  this.deleteEvent.emit(task);
  }
 
 

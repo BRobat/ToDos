@@ -1,10 +1,10 @@
 <div class="task">
   <button class="btn" (click)="showSubtasks(task)">...</button>
   <button class="btn" (click)="addSubtask(task)"> + </button>
-  <button class="btn" (click)="finish(task)">ok</button>
+  <button class="btn" (click)="completeTask(task)">ok</button>
   <del>
     <input class="input" *ngIf="task.done" placeholder="{{task.name}}" #box (keyup.enter)="update(box.value, task)">
   </del>
   <input class="input" *ngIf="!task.done" placeholder="{{task.name}}" #box (keyup.enter)="update(box.value, task)">
-  <button class="btn" (click)="delete(task)">X</button>
+  <button class="btn" (click)="deleteTask(task)">X</button>
 </div>
