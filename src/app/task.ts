@@ -3,6 +3,8 @@ export class Task {
     done: boolean;
     deleted: boolean;
     showSubtasks: boolean;
-    subtasks: [string];
     parent: string;
+    level: string;
+    subtasks: any[];
+
 }

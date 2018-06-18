@@ -23,11 +23,12 @@ export class AppComponent{
 
   addTask() {
       let newTask = new Task;
-      newTask.name = '';
+      newTask.name = "new task";
       newTask.deleted = false;
       newTask.done = false;
       newTask.showSubtasks = true;
       newTask.parent = ""
+      newTask.level = "- "
      
       this.tasksRef.push(newTask);
       console.log(newTask)
@@ -68,11 +69,13 @@ export class AppComponent{
 
     addSubtask($task){
       let newTask = new Task;
-      newTask.name = "";
+      newTask.name = "new task";
       newTask.deleted = false;
       newTask.done = false;
       newTask.showSubtasks = true;
       newTask.parent = $task.key;
+      newTask.level = $task.level + "- "
+
       this.tasksRef.push(newTask);
     }
 
@@ -89,7 +92,7 @@ export class AppComponent{
     }
 
     isLong(str) {
-      return str.length > 5;
+      return str.length > 10;
     }
 
     isEqual(str1, str2) {

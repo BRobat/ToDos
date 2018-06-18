@@ -19,6 +19,10 @@
     border: 0;
 }
 
+.level {
+    margin: auto 5px auto 20px;
+}
+
 
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
     color: black;

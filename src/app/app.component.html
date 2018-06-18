@@ -1,28 +1,53 @@
 <button class="btn" (click)="addTask()"> + </button>
 
+<!-- PYTAMID OF DOM  -->
+
+
+<ng-container *ngIf="(tasks$ | async) as tasks">
+  <ng-container *ngFor="let task of tasks">
+    
+
+  </ng-container>
+</ng-container>
+
+
+
+
+
+
+
+
+
+
 <ng-container *ngIf="(tasks$ | async) as tasks">
   <ng-container *ngFor="let task of tasks">
     <ng-container *ngIf="!isLong(task.parent)">
       <app-task [key]="key" [data]="task" (taskName)="updateTaskName($event, task)" (showEvent)="showSubtasks(task)" (doneEvent)="completeTask(task)"
         (deleteEvent)="deleteTask(task)" (addEvent)="addSubtask(task)"></app-task>
 
-      <ul>
 
 
-        <ng-container *ngFor="let u of tasks">
-            <ng-container *ngFor="let t of tasks">
-              <ng-container *ngIf="isEqual(t.parent, u.key)">
-                <li>
-                  <button class="btn" (click)="print(u.key)"> + </button>
-                  <button class="btn" (click)="print(t.key)"> + </button>
-                  <button class="btn" (click)="print(t)"> info </button>
+
+      <ng-container *ngFor="let u of tasks">
+        <ng-container *ngFor="let t of tasks">
+          <ng-container *ngIf="isEqual(t.parent, u.key)">
+            <ng-container *ngIf="isEqual(t.parent, task.key)">
+              <ng-container *ngIf="!t.deleted">
+                <ng-container *ngIf="!t.deleted">
+
+                  <!-- <button class="btn" (click)="print(u.key)"> + </button>
+            <button class="btn" (click)="print(t.key)"> + </button>
+            <button class="btn" (click)="print(t)"> info </button> -->
                   <app-task [key]="t.key" [data]="t" (taskName)="updateTaskName($event, t)" (showEvent)="showSubtasks(t)" (doneEvent)="completeTask(t)"
                     (deleteEvent)="deleteTask(t)" (addEvent)="addSubtask(t)"></app-task>
-                </li>
+
+                </ng-container>
               </ng-container>
             </ng-container>
           </ng-container>
-      </ul>
+        </ng-container>
+      </ng-container>
+
     </ng-container>
   </ng-container>
 </ng-container>

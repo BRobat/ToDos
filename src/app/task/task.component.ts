@@ -22,6 +22,8 @@ export class TaskComponent{
   @Output() deleteEvent = new EventEmitter<boolean>();
   @Output() addEvent = new EventEmitter<Task>();
 
+
+
   constructor() { 
   }
 
