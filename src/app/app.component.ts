@@ -14,12 +14,25 @@ import { Observable, Subscription } from 'rxjs';
 })
 export class AppComponent{
 
-  key: string = "subtasks";
 
   tasksRef: AngularFireList<any>;
   tasks$: Observable<any[]>;
 
   @ViewChild(TaskComponent) child;
+
+
+
+  constructor(db: AngularFireDatabase) {
+    this.tasksRef = db.list('/Tasks');
+    this.tasks$ = this.tasksRef.snapshotChanges().pipe(
+    map(changes => 
+      changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
+    ));
+  }
+
+
+
+
 
   addTask() {
       let newTask = new Task;
@@ -27,10 +40,8 @@ export class AppComponent{
       newTask.deleted = false;
       newTask.done = false;
       newTask.showSubtasks = true;
-      newTask.parent = ""
-      newTask.level = "- "
-      newTask.subtasks = ["x"]
-     
+      newTask.parent = "null";
+  
       this.tasksRef.push(newTask);
       console.log(newTask)
      }
@@ -80,25 +91,11 @@ export class AppComponent{
       newTask.done = false;
       newTask.showSubtasks = true;
       newTask.parent = $task.key;
-      newTask.level = $task.level + "- "
+      
       this.tasksRef.push(newTask);
-
-console.log(newTask[this.key])
-      this.tasksRef.update($task.key, {name: $task.name,
-        done: true,
-        deleted: $task.deleted,
-        showSubtasks: $task.showSubtasks,
-        parent: $task.parent,
-      subtasks: +newTask[this.key]})
     }
 
-    constructor(db: AngularFireDatabase) {
-      this.tasksRef = db.list('/Tasks');
-      this.tasks$ = this.tasksRef.snapshotChanges().pipe(
-      map(changes => 
-        changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
-      ));
-    }
+
 
     isString(str) {
       return typeof str === 'string';

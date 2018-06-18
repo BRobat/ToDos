@@ -1,6 +1,6 @@
 import { Task } from './../task';
 import { Observable } from 'rxjs';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 
 
 
@@ -11,8 +11,11 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class TaskComponent{
 
+  //@ViewChild(TaskComponent) child;
 
-  @Input('data') tasks: [Task];
+
+  @Input('data') tasks: Array<Task>;
+  @Input('task') task: Task;
   @Input('key') key: any[];
 
   @Output() taskName = new EventEmitter<string>();
@@ -33,6 +36,7 @@ export class TaskComponent{
 
   update(value, task) {
     console.log(value)
+    console.log(task)
     this.taskName.emit(value);
     this.taskEvent.emit(task);
   }
@@ -52,6 +56,11 @@ export class TaskComponent{
  deleteTask(task) {
   this.deleteEvent.emit(task);
  }
+
+ isEqual(str1, str2) {
+  return str1 == str2
+}
+
 
  print(str) {
    console.log(str);
