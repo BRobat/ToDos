@@ -20,7 +20,7 @@ export class AppComponent{
 
   @ViewChild(TaskComponent) child;
 
-  constructor(db: AngularFireDatabase, private data: DataService) {
+  constructor(db: AngularFireDatabase) {
     this.tasksRef = db.list('/Tasks');
     this.tasks$ = this.tasksRef.snapshotChanges().pipe(
     map(changes => 
