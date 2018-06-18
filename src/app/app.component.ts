@@ -38,21 +38,21 @@ export class AppComponent{
       console.log(newTask)
      }
 
-  addSubtask(task) {
-    let newSubtask = new Task;
-    newSubtask.name = "";
-    newSubtask.deleted = false;
-      newSubtask.done = false;
-      newSubtask.showSubtasks = true;
+    updateTaskName($event, task) {
+      console.log($event)
+      this.tasksRef.update(task.key, {name: $event,
+      done: task.done,
+      deleted: task.deleted,
+      showSubtasks: task.showSubtasks,
+      subtasks: task.subtasks})
     }
 
-    recieveMessage($event) {
-      console.log($event.key)
-      this.tasksRef.update($event.key, {name: $event,
-      done: $event.done,
-      deleted: $event.deleted,
-      showSubtasks: $event.showSubtasks,
-      subtasks: $event.subtasks})
+    showSubtasks(task) {
+      this.tasksRef.update(task.key, {name: task.name,
+        done: task.done,
+        deleted: task.deleted,
+        showSubtasks: !task.showSubtasks,
+        subtasks: task.subtasks})
     }
 
     constructor(db: AngularFireDatabase) {
@@ -62,10 +62,6 @@ export class AppComponent{
         changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
       )
     );
-    }
-
-    ngOnInit() {
-      
     }
 
 

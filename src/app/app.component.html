@@ -6,16 +6,8 @@
 <button class="btn" (click)="print(tasks$)">...</button>
 
 
-<div *ngFor="let task of tasks$ | async">
-  
-  <div *ngIf="task.subtasks; else noSubtasks">
-    <app-task [key]="key" [data]="task"(messageEvent)="recieveMessage($event)"></app-task>
-    <div *ngFor="let sub of task.subtasks">
-      <app-task [key]="key" [data]="task" (messageEvent)="recieveMessage($event)"></app-task>
-    </div>
-
+<div *ngFor="let task of (tasks$ | async) as task">
+  <div>
+    <app-task [key]="key" [data]="task"(taskName)="updateTaskName($event, task)" (showEvent)="showSubtasks(task)"></app-task>
   </div>
-  <ng-template #noSubtasks>
-    <app-task [key]="key" [data]="task" (messageEvent)="recieveMessage($event)"></app-task>
-  </ng-template>
 </div>
