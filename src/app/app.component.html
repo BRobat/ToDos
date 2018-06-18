@@ -4,12 +4,10 @@
 
 
 <ng-container *ngIf="(tasks$ | async) as tasks">
-
+  
   <ng-container *ngFor="let task of tasks">
-    <ng-container *ngIf="!isLong(task.parent)">
-      <button class="btn" (click)="print(task)">ok</button>
-      <app-task [task]="task" [key]="task.key" [data]="tasks" (taskName)="updateTaskName($event, task)" (showEvent)="showSubtasks(task)"
-        (doneEvent)="completeTask(task)" (deleteEvent)="deleteTask(task)" (addEvent)="addSubtask(task)"></app-task>
+      <ng-container *ngIf="!isLong(task.parent)">
+      <app-task [task]="task" [key]="task.key" [data]="tasks"></app-task>
     </ng-container>
   </ng-container>
 </ng-container>

@@ -4,7 +4,6 @@
     <ul>
       <li>
         <div class="task">
-
           <button class="btn" (click)="showSubtasks(task)">...</button>
           <button class="btn" (click)="addSubtask(task)"> + </button>
           <button class="btn" (click)="completeTask(task)">ok</button>
@@ -15,12 +14,13 @@
           <ng-container *ngIf="task.showSubtasks">
             <ng-container *ngFor="let t of tasks">
               <ng-container *ngIf="isEqual(t.parent, task.key)">
-
                 <app-task [key]="t.key" [data]="tasks" [task]="t"></app-task>
               </ng-container>
-
             </ng-container>
           </ng-container>
+
         </div>
       </li>
     </ul>
+  </div>
+</ng-container>

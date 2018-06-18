@@ -1,6 +1,7 @@
 import { Task } from './../task';
 import { Observable } from 'rxjs';
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { DataService } from '../data.service';
 
 
 
@@ -11,51 +12,42 @@ import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angu
 })
 export class TaskComponent{
 
-  //@ViewChild(TaskComponent) child;
-
-
   @Input('data') tasks: Array<Task>;
   @Input('task') task: Task;
   @Input('key') key: any[];
 
-  @Output() taskName = new EventEmitter<string>();
-  @Output() taskEvent = new EventEmitter<string>();
-  @Output() showEvent = new EventEmitter<boolean>();
-  @Output() doneEvent = new EventEmitter<boolean>();
-  @Output() deleteEvent = new EventEmitter<boolean>();
-  @Output() addEvent = new EventEmitter<string>();
 
-  constructor() { 
+
+  constructor(private data: DataService) { 
   }
 
   ngOnInit(): void {
-    
     
   }
 
 
   update(value, task) {
-    console.log(value)
     console.log(task)
-    this.taskName.emit(value);
-    this.taskEvent.emit(task);
+    this.data.nameTask(value, task);
   }
 
- showSubtasks(task) {
-  this.showEvent.emit(task);
- }
+  showSubtasks(task) {
+    this.data.showSubtasks(task);
+  }
 
- addSubtask(task) {
-  this.addEvent.emit(task);
- }
+  addSubtask(task) {
+    this.data.addSubtask(task)
+  }
 
- completeTask(task) {
-  this.doneEvent.emit(task);
- }
+  completeTask(task) {
+    this.data.completeTask(task)
+  }
 
- deleteTask(task) {
-  this.deleteEvent.emit(task);
- }
+  deleteTask(task) {
+    this.data.deleteTask(task)
+  }
+
+
 
  isEqual(str1, str2) {
   return str1 == str2

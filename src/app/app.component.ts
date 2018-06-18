@@ -1,36 +1,43 @@
 import { TaskComponent } from './task/task.component';
 import { Task } from './task';
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, OnChanges } from '@angular/core';
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { map } from 'rxjs/operators';
 import { Observable, Subscription } from 'rxjs';
+import { DataService } from './data.service';
+import { Change } from '@firebase/database/dist/src/core/view/Change';
 
 
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  providers: [ DataService ]
 })
 export class AppComponent{
 
 
   tasksRef: AngularFireList<any>;
   tasks$: Observable<any[]>;
+  currentTask: Task;
 
   @ViewChild(TaskComponent) child;
 
 
 
-  constructor(db: AngularFireDatabase) {
+  constructor(db: AngularFireDatabase, private data: DataService) {
     this.tasksRef = db.list('/Tasks');
     this.tasks$ = this.tasksRef.snapshotChanges().pipe(
     map(changes => 
       changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
     ));
+
+    this.data.currentTaskSource.subscribe(currentTask => this.currentTask = currentTask)
+    console.log(this.currentTask)
+    
+    
   }
-
-
 
 
 
@@ -46,15 +53,8 @@ export class AppComponent{
       console.log(newTask)
      }
 
-    updateTaskName($event, task) {
-      console.log(task)
-      
-        this.tasksRef.update(task.key, {name: $event,
-          done: task.done,
-          deleted: task.deleted,
-          showSubtasks: task.showSubtasks,
-          parent: task.parent})
-    }
+
+    
 
     showSubtasks($task) {
       console.log($task)

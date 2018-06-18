@@ -1,4 +1,5 @@
 export class Task {
+    key: string;
     name: string;
     done: boolean;
     deleted: boolean;
